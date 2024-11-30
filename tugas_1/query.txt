@@ -1,0 +1,57 @@
+1. Menampilkan Semua Kategori Produk
+
+SELECT * FROM `categories`;
+
+2. Menampilkan Semua Produk dengan Kategorinya
+
+SELECT p.id, p.name AS product_name, c.name AS category_name, p.price, p.stok
+FROM `product` p
+JOIN `categories` c ON p.category_id = c.id;
+
+3. Menampilkan Stok Tersedia untuk Setiap Produk
+
+SELECT p.name, i.quantity_in_stock
+FROM `product` p
+JOIN `inventory` i ON p.id = i.product_id;
+
+4. Menampilkan Pembayaran Berdasarkan Tanggal
+
+SELECT * FROM `payments` WHERE `payment_date` BETWEEN '2024-11-01' AND '2024-11-28';
+
+5. Menampilkan Produk yang Belum Dibeli (Stok > 0)
+
+SELECT p.id, p.name, p.price, p.stok
+FROM `product` p
+WHERE p.stok > 0;
+
+6. Menghitung Total Penjualan dari Produk Tertentu
+
+SELECT SUM(s.total_price) AS total_sales
+FROM `sales` s
+WHERE s.product_id = 1;
+
+7. Menampilkan Semua Pemasok dan Produk yang Mereka Supplai
+
+SELECT s.name AS supplier_name, p.name AS product_name
+FROM `suppliers` s
+JOIN `product_supplier` ps ON s.id = ps.supplier_id
+JOIN `product` p ON ps.product_id = p.id;
+
+8. Menampilkan Produk yang Dibeli dari Pemasok Tertentu
+
+SELECT p.name, pc.quantity, pc.total_price
+FROM `purchaces` pc
+JOIN `product` p ON pc.product_id = p.id
+WHERE pc.supplier_id = 1;
+
+9. Menampilkan Semua Pengguna dan Profil Mereka
+
+SELECT u.username, up.full_name, up.phone_number
+FROM `users` u
+JOIN `user_profiles` up ON u.id = up.user_id;
+
+10. Menampilkan Daftar Pembayaran Berdasarkan Metode Pembayaran
+
+SELECT p.payment_method, SUM(p.amount_paid) AS total_paid
+FROM `payments` p
+GROUP BY p.payment_method;
